@@ -1,6 +1,8 @@
 package com.bms.exp.api.bms_exp_api.util;
 
+import com.bms.exp.api.bms_exp_api.models.Theatre;
 import com.bms.exp.api.bms_exp_api.requestbody.CreateUserRequestBody;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -9,25 +11,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.HashMap;
 
 @Service
-public class DBApiUtil {
+public class DBApiUtil extends ApiUtilImpl {
 
     @Value("${bms.db.api.url}")
     String dbApiUrl;
 
+    @Autowired
+    RestTemplate restTemplate;
+
     public void createUser(CreateUserRequestBody createUserRequestBody){
-        String url = dbApiUrl + "/user/create";
-        URI finalUrl = URI.create(url);
-
-        RequestEntity req = RequestEntity.post(finalUrl).body(createUserRequestBody);
-
-        RestTemplate restTemplate = new RestTemplate();
-        try{
-            ResponseEntity<CreateUserRequestBody> resp = restTemplate.exchange(finalUrl, HttpMethod.POST, req, CreateUserRequestBody.class);
-        }catch (Exception e){
-            System.out.println(e);
-            throw e;
-        }
+        String endpoint = "/user/create";
+        makePostCall(createUserRequestBody, endpoint, dbApiUrl, new HashMap<>());
     }
+
+    public CreateUserRequestBody getUserByEmail(String email){
+        String endPoint = "/user/" + email;
+        CreateUserRequestBody user = (CreateUserRequestBody) makeGetCall(endPoint, dbApiUrl, new HashMap<>());
+        return user;
+    }
+
+    public void createTheater(Theatre theatre){
+        makePostCall(theatre, "/theatre/create", dbApiUrl, new HashMap<>());
+    }
+
 }
