@@ -25,11 +25,11 @@ public class UserService {
         }
         // Call Mail api to send mail
 
-        try{
-            mailApiUtil.sendUserRegistrationMail(createUserRequestBody.getEmail(), createUserRequestBody.getFirstName());
-        }catch (Exception e){
-            throw e;
-        }
+//        try{
+//            mailApiUtil.sendUserRegistrationMail(createUserRequestBody.getEmail(), createUserRequestBody.getFirstName());
+//        }catch (Exception e){
+//            throw e;
+//        }
 
     }
 }

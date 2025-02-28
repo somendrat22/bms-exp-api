@@ -19,7 +19,7 @@ public class ApiUtilImpl implements ApiUtil{
 
     @Override
     public Object makePostCall(Object requestBody, String endPoint, String apiUrl, HashMap<String, String > queryParams) {
-        String url = apiUrl + "/" + endPoint;
+        String url = apiUrl + endPoint;
         url = addQueryParams(url, queryParams);
         URI finalUrl = URI.create(url);
         RequestEntity req = RequestEntity.post(finalUrl).body(requestBody);
@@ -50,7 +50,7 @@ public class ApiUtilImpl implements ApiUtil{
 
     @Override
     public Object makePutCall(Object requestBody, String endPoint, String apiUrl, HashMap<String, String > queryParams){
-        String url = apiUrl + "/" + endPoint;
+        String url = apiUrl  + endPoint;
 
         url = addQueryParams(url, queryParams);
 
